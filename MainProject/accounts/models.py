@@ -26,6 +26,5 @@ class User(AbstractUser):
     active=models.BooleanField(default=True)  
     def Namee(self):
         return f"{self.first_name} {self.last_name} "
-
     def _str_(self):
         return f"{self.role} : {self.username}  - {self.department}"
