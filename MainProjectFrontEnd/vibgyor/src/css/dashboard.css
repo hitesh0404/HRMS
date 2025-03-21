@@ -1,0 +1,24 @@
+.side-links > li {
+        background-color: rgb(165, 101, 42);
+        opacity: 0.5;
+        color: black;
+        margin: 0 0 1% 0;
+        border-radius: 10px;
+        padding: 3% 3% 3% 10%;
+      }
+      .side-links > li:hover {
+        opacity: 1;
+        font-size: large;
+      }
+      .main-links > div > div {
+        margin: 1%;
+      }
+
+      .main-links > div > div:hover {
+        margin: 0;
+      }
+
+      .main-links {
+        /* height: 500px; */
+        background-color: hsl(36, 82%, 60%);
+      }
