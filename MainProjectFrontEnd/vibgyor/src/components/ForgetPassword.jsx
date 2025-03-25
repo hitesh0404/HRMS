@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 export default function ForgetPassword() {
   return (
@@ -41,6 +42,21 @@ export default function ForgetPassword() {
             >
               Send Reset Link
             </button>
+            <NavLink style={{ textDecoration: "none", color: "white" }} to="/">
+              <button
+                type="button"
+                className="btn w-100"
+                style={{
+                  backgroundColor: "hsl(36, 88%, 50%)",
+                  color: "white",
+                  fontWeight: "bold",
+                  margin: "2.5px",
+                  textDecoration: "none",
+                }}
+              >
+                Back
+              </button>
+            </NavLink>
           </div>
         </form>
 

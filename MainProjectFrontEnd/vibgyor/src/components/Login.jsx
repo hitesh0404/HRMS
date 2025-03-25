@@ -1,9 +1,21 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-// import { Link } from 'react-router-dom';
-// import {NavLink} from 'react-router-dom';
+import { useForm } from "react-hook-form";
 
 export default function Login() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  // Handling form submission
+  const onSubmit = (data) => {
+    console.log("Form submitted");
+    console.log(data);
+    
+  };
+
   return (
     <div className="overlay d-flex justify-content-center align-items-center vh-100">
       <div
@@ -15,7 +27,8 @@ export default function Login() {
         </h2>
 
         {/* Form with Labels on the Left and Above Inputs */}
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {/* Email input field */}
           <div className="mb-3 d-flex flex-column">
             <label
               htmlFor="email"
@@ -25,14 +38,24 @@ export default function Login() {
               Your email
             </label>
             <input
-              type="email"
+              type="text"
               className="form-control"
               id="email"
               placeholder="Enter your email"
-              required
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^\S+@\S+$/i,
+                  message: "Invalid email address",
+                },
+              })}
             />
+            {errors.email && (
+              <p style={{ color: "red" }}>{errors.email.message}</p>
+            )}
           </div>
 
+          {/* Password input field */}
           <div className="mb-3 d-flex flex-column">
             <label
               htmlFor="password"
@@ -46,16 +69,27 @@ export default function Login() {
               className="form-control"
               id="password"
               placeholder="Enter your password"
-              required
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 8,
+                  message: "Password must be at least 8 characters long",
+                },
+              })}
             />
+            {errors.password && (
+              <p style={{ color: "red" }}>{errors.password.message}</p>
+            )}
           </div>
 
+          {/* Remember Me Checkbox */}
           <div className="d-flex justify-content-between align-items-center">
             <div className="form-check">
               <input
                 type="checkbox"
                 className="form-check-input"
                 id="rememberMe"
+                {...register("rememberMe")}
               />
               <label htmlFor="rememberMe" className="form-check-label">
                 Remember me
@@ -82,8 +116,12 @@ export default function Login() {
             >
               Login
             </button>
+            <NavLink
+              style={{ textDecoration: "none", color: "white" }}
+              to="/"
+            >
             <button
-              type="submit"
+              type="button"
               className="btn w-100"
               style={{
                 backgroundColor: "hsl(36, 88%, 50%)",
@@ -93,16 +131,13 @@ export default function Login() {
                 textDecoration: "none",
               }}
             >
-              <NavLink
-                style={{ textDecoration: "none", color: "white" }}
-                to="/"
-              >
                 Back
-              </NavLink>
             </button>
+              </NavLink>
           </div>
         </form>
 
+        {/* Link to Sign Up Page */}
         <div className="text-center mt-3">
           <p className="mb-0">
             Don't have an account?{" "}
