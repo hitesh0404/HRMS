@@ -19,11 +19,16 @@ from django.urls import path,include
 from django.urls import path,include
 from rest_framework.routers import DefaultRouter
 from accounts.views import UserView
-route = DefaultRouter()
-route.register(r'user',UserView)
+router = DefaultRouter()
+router.register(r'user',UserView)
+from accounts.views import CombinedListViewSet
+
+router.register(r'combined-data', CombinedListViewSet, basename='combined-data')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/',include(route.urls)),
+    path('api/',include(router.urls)),
+    # path('api/',),
     path('api/attendance/',include('attendance.urls')),
     path('api/department/',include('department.urls')),
     path('api/leader/',include('leader.urls')),

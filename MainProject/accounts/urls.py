@@ -1,8 +1,10 @@
-from django.urls import path,include
 from rest_framework.routers import DefaultRouter
-# from .views import User
-# route = DefaultRouter()
-# route.register(r'user',User,basename='user')
-# urlpatterns = [
-#     path('',include(route.urls))
-# ]
+from django.urls import path, include
+from .views import CombinedListViewSet
+
+router = DefaultRouter()
+router.register(r'combined-data', CombinedListViewSet, basename='combined-data')
+
+urlpatterns = [
+    path('register-form-data/', include(router.urls)),
+]
