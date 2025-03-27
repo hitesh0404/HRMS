@@ -52,9 +52,63 @@ export default function RegisterPage() {
   };
 
   // Handle form submission
-  const onSubmit = (data) => {
-    console.log("Form submitted", data);
+  // Handle form submission
+  const onSubmit = async (formData) => {
+    console.log(departments,managers);
+      
+    // Find the selected department and manager objects to get their IDs
+    const selectedDepartment = departments.find(
+      (dept) => dept.dept_name.toString() === formData.department
+    );
+    const selectedManager = managers.find(
+      (manager) => manager.username.toString() === formData.manager
+    );
+    
+    // Prepare the data for API submission
+    const apiData = {
+      ...formData,
+      user_permissions:[],
+      groups:[],
+      department: selectedDepartment ? selectedDepartment.dept_id : null,
+      manager: selectedManager ? selectedManager.manager : null,
+      date_joined: new Date().toISOString(),
+      role : Number(formData.role), // Add current date
+      // Remove confirmPassword as it's not needed in the API
+      confirmPassword: undefined,
+    };
+    
+    // Remove undefined fields
+    Object.keys(apiData).forEach(
+      (key) => apiData[key] === undefined && delete apiData[key]
+    );
+    console.log("Form submitted", apiData);
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/user/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(apiData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("API Error:", errorData);
+        throw new Error(errorData.message || "Failed to create account");
+      }
+
+      const data = await response.json();
+      console.log("User created successfully:", data);
+      // Optionally redirect or show success message
+    } catch (error) {
+      console.error("Error creating user:", error);
+      alert(
+        error.message || "Failed to create account. Please try again later."
+      );
+    }
   };
+
 
   return (
     <div className="overlay d-flex justify-content-center align-items-center vh-100">
