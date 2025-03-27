@@ -9,7 +9,7 @@ export default function RegisterPage() {
   const [departments, setDepartment] = useState([]);
   const [managers, setManager] = useState([]);
   useEffect(() => {
-    fetch(APIROOT + "/combined-data/")
+    fetch(APIROOT + "combined-data/")
       .then((response) => response.json())
       .then((data) => {
         // Assuming combined data includes role, department, manager
