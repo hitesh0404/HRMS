@@ -9,7 +9,7 @@ export default function RegisterPage() {
   const [departments, setDepartment] = useState([]);
   const [managers, setManager] = useState([]);
   useEffect(() => {
-    fetch(APIROOT + "combined-data/")
+    fetch(APIROOT + "api/combined-data/")
       .then((response) => response.json())
       .then((data) => {
         // Assuming combined data includes role, department, manager
@@ -100,7 +100,14 @@ export default function RegisterPage() {
 
       const data = await response.json();
       console.log("User created successfully:", data);
-      // Optionally redirect or show success message
+      const message = document.getElementById("message");
+      message.style.display = "block";
+      message.textContent = "User created successfully";
+      window.location.href = "#mainForm";
+      setTimeout(() => {
+        message.style.display = "none";
+        window.location.href ="/login";
+      }, 2000); 
     } catch (error) {
       console.error("Error creating user:", error);
       alert(
@@ -116,10 +123,14 @@ export default function RegisterPage() {
         className="main-form p-5 rounded-4 shadow-lg"
         style={{ backgroundColor: "white", maxWidth: "500px", width: "100%" }}
       >
-        <h2 className="text-center mb-4" style={{ color: "hsl(36, 88%, 50%)" }}>
+        <h2
+          id="mainForm"
+          className="text-center mb-4"
+          style={{ color: "hsl(36, 88%, 50%)" }}
+        >
           Create an Account
         </h2>
-
+        <div id="message"></div>
         {/* Register Form */}
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* First Name */}

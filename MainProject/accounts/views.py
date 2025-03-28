@@ -4,11 +4,18 @@ from django.views import View
 from rest_framework import viewsets
 from  .models import User
 from .serializers import UserSerializer
+from rest_framework import permissions
 from rest_framework.mixins import ListModelMixin
-class  UserView(viewsets.ModelViewSet):
+class  UserView(viewsets.ModelViewSet):  
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    
+    def get_permissions(self):
+        if self.action == 'create':
+            permission_classes = [permissions.AllowAny]
+        else:
+            permission_classes = [permissions.IsAuthenticated]
+        return [permission() for permission in permission_classes]
+
 # class UserRegisterView(ListModelMixin):
 #     queryset = User.objects.all()
 #     serializer_class = UserRegisterSerializer
@@ -21,7 +28,7 @@ class CombinedListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     """
     A custom viewset that combines roles, departments, and managers into a single list view.
     """
-
+    permission_classes = [permissions.AllowAny]
     def list(self, request, *args, **kwargs):
         # Fetch data for roles, departments, and managers
         roles = Role.objects.all()

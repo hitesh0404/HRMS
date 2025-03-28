@@ -12,7 +12,7 @@ gender_choice = [
 class Role(models.Model):
     RoleName=models.CharField(max_length=50,unique=True)
     description=models.CharField(max_length=200,null=False,default=" ")
-    def _str_(self):
+    def __str__(self):
         return f"{self.RoleName}"
 
 class User(AbstractUser):
@@ -26,5 +26,5 @@ class User(AbstractUser):
     active=models.BooleanField(default=True)  
     def Namee(self):
         return f"{self.first_name} {self.last_name} "
-    def _str_(self):
+    def __str__(self):
         return f"{self.role} : {self.username}  - {self.department}"

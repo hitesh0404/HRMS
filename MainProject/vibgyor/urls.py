@@ -22,7 +22,7 @@ from accounts.views import UserView
 router = DefaultRouter()
 router.register(r'user',UserView)
 from accounts.views import CombinedListViewSet
-
+from rest_framework.authtoken.views import obtain_auth_token
 router.register(r'combined-data', CombinedListViewSet, basename='combined-data')
 
 urlpatterns = [
@@ -33,4 +33,5 @@ urlpatterns = [
     path('api/department/',include('department.urls')),
     path('api/leader/',include('leader.urls')),
     path('api/task/',include('task.urls')),
+    path('api-token-auth/',obtain_auth_token,name='api_token_auth'),
 ]
