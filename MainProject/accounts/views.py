@@ -52,3 +52,12 @@ class Login(View):
 
 class Register(View):
     pass
+
+class RoleViewSet(viewsets.ModelViewSet):
+    queryset = Role.objects.all()
+    serializer_class = RoleSerializer
+    permission_classes = permissions.IsAuthenticated
+# class UserPermissionsViewSet(viewsets.ModelViewSet):
+#     queryset = User.objects.all()
+#     serializer_class = UserPermissionSerializer
+#     permission_classes = permissions.IsAuthenticated

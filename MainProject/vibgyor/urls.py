@@ -16,22 +16,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from django.urls import path,include
 from rest_framework.routers import DefaultRouter
 from accounts.views import UserView
-router = DefaultRouter()
-router.register(r'user',UserView)
 from accounts.views import CombinedListViewSet
 from rest_framework.authtoken.views import obtain_auth_token
-router.register(r'combined-data', CombinedListViewSet, basename='combined-data')
+router = DefaultRouter()
+router.register(r'user',UserView)
+# router.register(r'combined-data', CombinedListViewSet, basename='combined-data')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include(router.urls)),
+    path('api/',include('accounts.urls')),
     # path('api/',),
-    path('api/attendance/',include('attendance.urls')),
-    path('api/department/',include('department.urls')),
-    path('api/leader/',include('leader.urls')),
-    path('api/task/',include('task.urls')),
+    path('api/',include('attendance.urls')),
+    path('api/',include('department.urls')),
+    path('api/',include('leader.urls')),
+    path('api/',include('task.urls')),
     path('api-token-auth/',obtain_auth_token,name='api_token_auth'),
 ]

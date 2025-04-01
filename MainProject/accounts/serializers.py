@@ -5,10 +5,11 @@ from rest_framework import serializers
 from .models import User,Role,Department
 from django.contrib.auth.hashers import make_password
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'  # or list all fields explicitly
+        # fields = '__all__'  # or list all fields explicitly
+        exclude = ['user_permissions']
         extra_kwargs = {
             'password': {'write_only': True}
         }
@@ -53,3 +54,8 @@ class ManagerSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ['username','email','role','department','manager']
+
+# class UserPermissionSerializer(ModelSerializer):
+#     class Meta:
+#         model = Permission
+#         fields = "__all__"
